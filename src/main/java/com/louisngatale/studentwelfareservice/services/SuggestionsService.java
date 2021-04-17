@@ -46,7 +46,7 @@ public class SuggestionsService {
         List<SuggestionsResponse> responses = new ArrayList<>();
 
         suggestions.forEach(item ->{
-            responses.add(new SuggestionsResponse(item.getTitle(),item.getBody(),item.getStatus()));
+            responses.add(new SuggestionsResponse(item.getTitle(),item.getBody(),item.getStatus(),item.getCreatedAt()));
         });
 
         return new AllSuggestionsResponse(responses);

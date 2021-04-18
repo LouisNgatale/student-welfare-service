@@ -19,9 +19,6 @@ public class RulesService {
     public AllRulesResponse getAll(){
         List<Rules> rules = rulesDao.findAll();
 
-        rules.forEach(rules1 -> {
-            System.out.println(rules1);
-        });
         return new AllRulesResponse(rules);
     }
 }

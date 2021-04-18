@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.text.DateFormat;
 
 public class SuggestionsResponse {
+
+    private Integer id;
     private String title;
     private String message;
     private String status;
@@ -12,7 +14,8 @@ public class SuggestionsResponse {
     public SuggestionsResponse() {
     }
 
-    public SuggestionsResponse(String title, String message, String status, java.util.Date createdAt) {
+    public SuggestionsResponse(Integer id, String title, String message, String status, java.util.Date createdAt) {
+        this.id = id;
         this.title = title;
         this.message = message;
         this.status = status;
@@ -49,6 +52,18 @@ public class SuggestionsResponse {
     }
 
     public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setCreatedAt(java.util.Date createdAt) {
         this.createdAt = createdAt;
     }
 }

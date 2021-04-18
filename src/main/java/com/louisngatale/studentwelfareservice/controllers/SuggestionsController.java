@@ -29,4 +29,9 @@ public class SuggestionsController {
     public ResponseEntity<?> getStudentPersonalSuggestions(){
         return  ResponseEntity.ok(suggestionsService.getStudentsSuggestions());
     }
+
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteSuggestion(@PathVariable Integer id){
+        return  ResponseEntity.ok(suggestionsService.deleteSuggestion(id));
+    }
 }

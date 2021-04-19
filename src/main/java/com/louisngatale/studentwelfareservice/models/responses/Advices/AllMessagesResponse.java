@@ -4,9 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllMessagesResponse {
+    private Integer conversationId;
+
     List<SingleMessageResponse> allMessages = new ArrayList<>();
 
     public AllMessagesResponse(List<SingleMessageResponse> allMessages) {
+        this.allMessages = allMessages;
+    }
+
+    public AllMessagesResponse(Integer conversationId, List<SingleMessageResponse> allMessages) {
+        this.conversationId = conversationId;
         this.allMessages = allMessages;
     }
 
@@ -16,5 +23,13 @@ public class AllMessagesResponse {
 
     public void setAllMessages(List<SingleMessageResponse> allMessages) {
         this.allMessages = allMessages;
+    }
+
+    public Integer getConversationId() {
+        return conversationId;
+    }
+
+    public void setConversationId(Integer conversationId) {
+        this.conversationId = conversationId;
     }
 }

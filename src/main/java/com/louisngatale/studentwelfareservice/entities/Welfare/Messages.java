@@ -1,9 +1,6 @@
 package com.louisngatale.studentwelfareservice.entities.Welfare;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -23,11 +20,15 @@ public class Messages {
     public Messages() {
     }
 
-    public Messages(String messageBody, Integer sentBy, boolean sentByStudent, Date sentAt) {
+    @ManyToOne
+    private Conversations conversations;
+
+    public Messages(String messageBody, Integer sentBy, boolean sentByStudent, Date sentAt, Conversations conversations) {
         this.messageBody = messageBody;
         this.sentBy = sentBy;
         this.sentByStudent = sentByStudent;
         this.sentAt = sentAt;
+        this.conversations = conversations;
     }
 
     public Integer getId() {
@@ -62,11 +63,20 @@ public class Messages {
         this.sentByStudent = sentByStudent;
     }
 
+
     public Date getSentAt() {
         return sentAt;
     }
 
     public void setSentAt(Date sentAt) {
         this.sentAt = sentAt;
+    }
+
+    public Conversations getConversations() {
+        return conversations;
+    }
+
+    public void setConversations(Conversations conversations) {
+        this.conversations = conversations;
     }
 }

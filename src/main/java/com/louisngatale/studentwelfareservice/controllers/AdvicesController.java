@@ -1,12 +1,10 @@
 package com.louisngatale.studentwelfareservice.controllers;
 
+import com.louisngatale.studentwelfareservice.models.requests.Advices.AdvicesRequest;
 import com.louisngatale.studentwelfareservice.services.AdvicesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -15,6 +13,7 @@ public class AdvicesController {
 
     @Autowired
     AdvicesService advicesService;
+
 //    Get all messages for student
     @RequestMapping(value = "/conversations/messages", method = RequestMethod.GET)
     public ResponseEntity<?> getMessages(){
@@ -22,6 +21,11 @@ public class AdvicesController {
     }
 
 //    Create new message for student
+    @RequestMapping(value = "/conversations/messages/new", method = RequestMethod.POST)
+    public ResponseEntity<?> createMessage(@RequestBody AdvicesRequest advicesRequest){
+        return ResponseEntity.ok(advicesService.createNewMessage(advicesRequest));
+    }
+
 
 //    Get all conversations for dean
 

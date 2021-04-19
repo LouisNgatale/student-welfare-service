@@ -1,10 +1,8 @@
 package com.louisngatale.studentwelfareservice.entities.Welfare;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Conversations {
@@ -25,6 +23,9 @@ public class Conversations {
         return id;
     }
 
+    @OneToMany(mappedBy = "conversations")
+    private List<Messages> messages;
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -35,5 +36,13 @@ public class Conversations {
 
     public void setStudentId(Integer studentId) {
         this.studentId = studentId;
+    }
+
+    public List<Messages> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Messages> messages) {
+        this.messages = messages;
     }
 }

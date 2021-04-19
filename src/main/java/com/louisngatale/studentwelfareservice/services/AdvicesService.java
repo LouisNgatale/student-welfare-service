@@ -2,6 +2,8 @@ package com.louisngatale.studentwelfareservice.services;
 
 import com.louisngatale.studentwelfareservice.entities.AppUser.User;
 import com.louisngatale.studentwelfareservice.entities.Welfare.Conversations;
+import com.louisngatale.studentwelfareservice.entities.Welfare.Messages;
+import com.louisngatale.studentwelfareservice.models.requests.Advices.AdvicesRequest;
 import com.louisngatale.studentwelfareservice.models.responses.Advices.AllMessagesResponse;
 import com.louisngatale.studentwelfareservice.models.responses.Advices.SingleMessageResponse;
 import com.louisngatale.studentwelfareservice.models.responses.SingleResponse;
@@ -51,8 +53,34 @@ public class AdvicesService {
                                 item.isSentByStudent(),item.getSentAt()));
                     });
 
-            return new AllMessagesResponse(message);
+            return new AllMessagesResponse(conversation.get().getId(),message);
         }
 
+    }
+
+    public Object createNewMessage(AdvicesRequest advicesRequest) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Optional<User> user1 = userDao.findByLoginId(username);
+        User user = user1.get();
+
+        Optional<Conversations> conversationId = conversationsDao.findById(advicesRequest.getConversationId());
+
+        if (conversationId.isPresent()) {
+            Messages message = new Messages(advicesRequest.getMessageBody(),
+                    user.getId(),
+                    advicesRequest.isSentByStudent(),
+                    advicesRequest.getSentAt(),
+                    conversationId.get());
+
+            Messages savedMessage = messagesDao.save(message);
+
+            return new SingleMessageResponse(savedMessage.getId(),
+                    savedMessage.getMessageBody(),
+                    savedMessage.getSentBy(), savedMessage.isSentByStudent(),
+                    savedMessage.getSentAt());
+        }
+
+        return new SingleResponse("Error","This conversation doesn't exist");
     }
 }

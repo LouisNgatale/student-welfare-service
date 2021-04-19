@@ -1,5 +1,7 @@
 package com.louisngatale.studentwelfareservice.entities.Welfare;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -15,6 +17,8 @@ public class Messages {
 
     private boolean sentByStudent;
 
+    @Column(name = "sentAt",columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @CreationTimestamp
     private Date sentAt;
 
     public Messages() {
@@ -23,11 +27,10 @@ public class Messages {
     @ManyToOne
     private Conversations conversations;
 
-    public Messages(String messageBody, Integer sentBy, boolean sentByStudent, Date sentAt, Conversations conversations) {
+    public Messages(String messageBody, Integer sentBy, boolean sentByStudent,  Conversations conversations) {
         this.messageBody = messageBody;
         this.sentBy = sentBy;
         this.sentByStudent = sentByStudent;
-        this.sentAt = sentAt;
         this.conversations = conversations;
     }
 

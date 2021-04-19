@@ -64,13 +64,14 @@ public class AdvicesService {
         Optional<User> user1 = userDao.findByLoginId(username);
         User user = user1.get();
 
+        boolean isStudent = user.getRoles().stream().anyMatch(role -> role.getRole().equals("STUDENT"));
+
         Optional<Conversations> conversationId = conversationsDao.findById(advicesRequest.getConversationId());
 
         if (conversationId.isPresent()) {
             Messages message = new Messages(advicesRequest.getMessageBody(),
                     user.getId(),
-                    advicesRequest.isSentByStudent(),
-                    advicesRequest.getSentAt(),
+                    isStudent,
                     conversationId.get());
 
             Messages savedMessage = messagesDao.save(message);

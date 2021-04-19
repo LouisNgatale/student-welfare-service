@@ -15,7 +15,7 @@ public class AdvicesController {
     AdvicesService advicesService;
 
 //    Get all messages for student
-    @RequestMapping(value = "/conversations/messages", method = RequestMethod.GET)
+    @RequestMapping(value = "/conversations/messages/all", method = RequestMethod.GET)
     public ResponseEntity<?> getMessages(){
         return ResponseEntity.ok(advicesService.getMessagesForStudent());
     }
@@ -25,7 +25,6 @@ public class AdvicesController {
     public ResponseEntity<?> createMessage(@RequestBody AdvicesRequest advicesRequest){
         return ResponseEntity.ok(advicesService.createNewMessage(advicesRequest));
     }
-
 
 //    Get all conversations for dean
 

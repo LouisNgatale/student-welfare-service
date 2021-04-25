@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class Rules {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String title;
@@ -20,8 +20,7 @@ public class Rules {
     public Rules() {
     }
 
-    public Rules(Integer id, String title, String category, String description) {
-        this.id = id;
+    public Rules(String title, String category, String description) {
         this.title = title;
         this.category = category;
         this.description = description;

@@ -4,7 +4,9 @@ import com.louisngatale.studentwelfareservice.entities.AppUser.User;
 import com.louisngatale.studentwelfareservice.entities.Welfare.Conversations;
 import com.louisngatale.studentwelfareservice.entities.Welfare.Messages;
 import com.louisngatale.studentwelfareservice.models.requests.Advices.AdvicesRequest;
+import com.louisngatale.studentwelfareservice.models.responses.Advices.AllConversations;
 import com.louisngatale.studentwelfareservice.models.responses.Advices.AllMessagesResponse;
+import com.louisngatale.studentwelfareservice.models.responses.Advices.SingleConversation;
 import com.louisngatale.studentwelfareservice.models.responses.Advices.SingleMessageResponse;
 import com.louisngatale.studentwelfareservice.models.responses.SingleResponse;
 import com.louisngatale.studentwelfareservice.repositories.AppUser.UserDao;
@@ -17,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,17 +48,8 @@ public class AdvicesService {
             conversationsDao.save(newConversation);
             return new  SingleResponse("Success","New conversation created");
         }else {
-            List<SingleMessageResponse> message = new ArrayList<>();
-            messagesDao.findAll()
-                    .forEach(item -> {
-                        message.add(new SingleMessageResponse(item.getId(),
-                                item.getMessageBody(),item.getSentBy(),
-                                item.isSentByStudent(),item.getSentAt()));
-                    });
-
-            return new AllMessagesResponse(conversation.get().getId(),message);
+            return getObject(conversation);
         }
-
     }
 
     public Object createNewMessage(AdvicesRequest advicesRequest) {
@@ -83,5 +77,47 @@ public class AdvicesService {
         }
 
         return new SingleResponse("Error","This conversation doesn't exist");
+    }
+
+    public AllConversations getConversations() {
+        List<Conversations> all = conversationsDao.findAll();
+        List<SingleConversation> conversations = new ArrayList<>();
+
+        all.forEach(item -> {
+            Messages message = messagesDao.findByConversationsId(item.getId())
+                    .stream()
+                    .sorted(Comparator.comparing(Messages::getSentAt).reversed())
+                    .findFirst().get();
+
+            String loginId = userDao.findById(item.getStudentId()).get().getLoginId();
+            conversations.add(new SingleConversation(loginId,message.getMessageBody(),item.getId()));
+        });
+        return  new AllConversations(conversations);
+    }
+
+    public Object getMessageById(Integer id) {
+
+        Optional<Conversations> conversation = conversationsDao.findById(id);
+
+        if (conversation.isEmpty()){
+            return new  SingleResponse("Warning","No messages for this conversation");
+        }else {
+            return getObject(conversation);
+        }
+    }
+
+    private Object getObject(Optional<Conversations> conversation) {
+        List<SingleMessageResponse> message = new ArrayList<>();
+
+        messagesDao.findAll()
+                .stream()
+                .sorted(Comparator.comparing(Messages::getSentAt))
+                .forEach(item -> {
+                    message.add(new SingleMessageResponse(item.getId(),
+                            item.getMessageBody(),item.getSentBy(),
+                            item.isSentByStudent(),item.getSentAt()));
+                });
+
+        return new AllMessagesResponse(conversation.get().getId(),message);
     }
 }

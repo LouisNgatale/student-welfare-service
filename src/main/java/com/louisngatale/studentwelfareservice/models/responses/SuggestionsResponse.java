@@ -21,6 +21,7 @@ public class SuggestionsResponse {
         this.message = message;
         this.status = status;
         this.createdAt = createdAt;
+        this.category = category;
     }
 
     public String getCategory() {
@@ -46,7 +47,6 @@ public class SuggestionsResponse {
     public void setMessage(String message) {
         this.message = message;
     }
-
 
     public String getStatus() {
         return status;

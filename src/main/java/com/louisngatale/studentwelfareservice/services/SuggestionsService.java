@@ -31,7 +31,7 @@ public class SuggestionsService {
         Optional<User> user1 = userDao.findByLoginId(username);
         User user = user1.get();
 
-        Suggestions suggestion = new Suggestions(user.getId(),request.getTitle(),request.getMessage());
+        Suggestions suggestion = new Suggestions(user.getId(),request.getTitle(),request.getMessage(),request.getCategory());
 
         suggestionsDao.save(suggestion);
         return request;

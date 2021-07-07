@@ -19,6 +19,8 @@ public class Suggestions {
 
     private String body;
 
+    private String category;
+
     @Column(name = "createdAt",columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @CreationTimestamp
     private Date createdAt;
@@ -26,12 +28,21 @@ public class Suggestions {
     public Suggestions() {
     }
 
-    public Suggestions(Integer placedBy,  String title, String body) {
+    public Suggestions(Integer placedBy,  String title, String body, String category) {
         this.placedBy = placedBy;
         this.status = status;
         this.title = title;
         this.body = body;
         this.createdAt = createdAt;
+        this.category=category;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Integer getId() {

@@ -87,10 +87,17 @@ public class AdvicesService {
             Messages message = messagesDao.findByConversationsId(item.getId())
                     .stream()
                     .sorted(Comparator.comparing(Messages::getSentAt).reversed())
-                    .findFirst().get();
+                    .findFirst().orElse(null);
+
+            String previous_message;
+            if (message != null) {
+                previous_message = message.getMessageBody();
+            } else {
+                previous_message = "No message";
+            }
 
             String loginId = userDao.findById(item.getStudentId()).get().getLoginId();
-            conversations.add(new SingleConversation(loginId,message.getMessageBody(),item.getId()));
+            conversations.add(new SingleConversation(loginId,previous_message,item.getId()));
         });
         return  new AllConversations(conversations);
     }

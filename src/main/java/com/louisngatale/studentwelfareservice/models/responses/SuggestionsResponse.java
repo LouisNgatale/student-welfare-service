@@ -9,17 +9,26 @@ public class SuggestionsResponse {
     private String title;
     private String message;
     private String status;
+    private String category;
     private java.util.Date createdAt;
 
     public SuggestionsResponse() {
     }
 
-    public SuggestionsResponse(Integer id, String title, String message, String status, java.util.Date createdAt) {
+    public SuggestionsResponse(Integer id, String title, String message, String status, String category,java.util.Date createdAt) {
         this.id = id;
         this.title = title;
         this.message = message;
         this.status = status;
         this.createdAt = createdAt;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getTitle() {

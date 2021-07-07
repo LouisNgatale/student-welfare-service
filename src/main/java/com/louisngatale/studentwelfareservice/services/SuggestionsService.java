@@ -37,6 +37,17 @@ public class SuggestionsService {
         return request;
     }
 
+    public AllSuggestionsResponse getAll(){
+        List<Suggestions> suggestions = suggestionsDao.findAll();
+        List<SuggestionsResponse> responses = new ArrayList<>();
+
+        suggestions.forEach(item ->{
+            responses.add(new SuggestionsResponse(item.getId(),item.getTitle(),item.getBody(),item.getStatus(),item.getCategory(),item.getCreatedAt()));
+        });
+
+        return new AllSuggestionsResponse(responses);
+    }
+
     public AllSuggestionsResponse getStudentsSuggestions(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
@@ -47,7 +58,7 @@ public class SuggestionsService {
         List<SuggestionsResponse> responses = new ArrayList<>();
 
         suggestions.forEach(item ->{
-            responses.add(new SuggestionsResponse(item.getId(),item.getTitle(),item.getBody(),item.getStatus(),item.getCreatedAt()));
+            responses.add(new SuggestionsResponse(item.getId(),item.getTitle(),item.getBody(),item.getStatus(),item.getCategory(),item.getCreatedAt()));
         });
         return new AllSuggestionsResponse(responses);
     }

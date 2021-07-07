@@ -24,6 +24,10 @@ public class SuggestionsController {
     public ResponseEntity<?> create(@RequestBody NewSuggestionRequest request){
         return  ResponseEntity.ok(suggestionsService.create(request));
     }
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public ResponseEntity<?> getAll(){
+        return ResponseEntity.ok(suggestionsService.getAll());
+    }
 
     @RequestMapping(value = "/student/all", method = RequestMethod.GET)
     public ResponseEntity<?> getStudentPersonalSuggestions(){

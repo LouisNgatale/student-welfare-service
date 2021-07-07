@@ -24,7 +24,4 @@ public class RulesController {
     public ResponseEntity<?> create(@RequestBody RulesRequest request){
         return ResponseEntity.ok(rulesService.create(request));
     }
-
-
-
 }

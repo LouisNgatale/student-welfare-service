@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "suggestions")
 public class Suggestions {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

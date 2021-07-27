@@ -1,11 +1,9 @@
 package com.louisngatale.studentwelfareservice.entities.Welfare;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "advices")
 public class Advices {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
